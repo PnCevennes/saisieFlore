@@ -1,0 +1,9 @@
+.htaccess
+config.php
+
+*.*~
+
+Photos/*
+GPX/*
+ParamDefaut.js
+PostGreSQL.php
