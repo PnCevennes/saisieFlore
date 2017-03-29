@@ -4,8 +4,9 @@ var colonneSelectionCarto = new (new Ext.extend(Ext.grid.CheckboxSelectionModel,
     new GeoExt.grid.FeatureSelectionModelMixin));
 
 //Configuration par défaut des cartes
-
+/*
 Proj4js.defs["EPSG:3857"] = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs"
+
 
 var ign_api_key =  "uzstzm52el3k2czl20hh6vvc";
 var WMTS_IGN_SCANS = new OpenLayers.Layer.WMTS({
@@ -15,7 +16,7 @@ var WMTS_IGN_SCANS = new OpenLayers.Layer.WMTS({
   matrixSet: "PM",
   style: "normal",
   numZoomLevels: 19,
-  projection : new OpenLayers.Projection("EPSG:3857")
+  projection : "EPSG:3857"
 }); 
 
 var WMTS_IGN_ORTHO = new OpenLayers.Layer.WMTS({
@@ -25,19 +26,21 @@ var WMTS_IGN_ORTHO = new OpenLayers.Layer.WMTS({
   matrixSet: "PM",
   style: "normal",
   numZoomLevels: 19,
-  projection : new OpenLayers.Projection("EPSG:2154")
+  projection : new OpenLayers.Projection("EPSG:3857")
 }); 
+*/
+var SRV_CARTO = 'http://5.196.128.222/mapserver/wms/';
 
-var WMS_PNX = new OpenLayers.Layer.WMS('Limites PNX',
-    'http://extranet.parcnational.fr/pnx/wms', {
-        layers: ['AOA', 'Coeur'],
-        isBaseLayer: false,
-        transparent: 'false'
-    }
-);
+//Configuration par défaut des cartes
+var WMS_IGN = new OpenLayers.Layer.WMS('Fonds IGN', SRV_CARTO+'ign/',
+    {layers: ['Sc1000', 'Sc25', 'Sc100', 'Sc250']});
 
-var couches = [WMTS_IGN_SCANS,WMTS_IGN_ORTHO ,  WMS_PNX]; // ordre des couches : arrière-plan >>> premier-plan
+var WMS_BD_Orthos = new OpenLayers.Layer.WMS('BD Ortho HR (2012)', SRV_CARTO+'ortho_hr_2012/',
+    {layers: ['BD_Orthos']});
 
+    
+//var couches = [WMTS_IGN_SCANS,WMTS_IGN_ORTHO , WMS_ORTHO_HR, WMS_PNX]; // ordre des couches : arrière-plan >>> premier-plan
+var couches = [WMS_IGN, WMS_BD_Orthos]; // ordre des couches : arrière-plan >>> premier-plan
 
 // paramètrage visuel, echelle, emprise et systéme de projection
 const CST_center = [411185.962,5504029.003]; 
@@ -45,8 +48,8 @@ const CST_zoom = 12;
 const CST_seuilZoomSelection = 17;
 const CST_region = 'north';
 var carte = new OpenLayers.Map('carte', {
-    //maxExtent: new OpenLayers.Bounds(714559, 6314108, 798599, 6388697),
-    maxExtent: new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508),
+    maxExtent: new OpenLayers.Bounds(714559, 6314108, 798599, 6388697),
+    //maxExtent: new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508),
     maxResolution: 'auto',
     projection: 'EPSG:2154',
     displayProjection: new OpenLayers.Projection('EPSG:4326'),
