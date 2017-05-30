@@ -7,7 +7,7 @@
     
     $cnxPgBd = new CnxPgBd();
     $req = "WITH cibles as (
-              SELECT string_agg(nom_complet, ' & ') AS cibles, zpr_cibles
+              SELECT string_agg(DISTINCT nom_complet, ' & ') AS cibles, zpr_cibles
               FROM ( 
                 SELECT nom_complet, zpr_cibles
                 FROM inpn.v_cibles 
@@ -15,7 +15,7 @@
                 ON cd_nom = ANY(string_to_array(zpr_cibles, '&'))
 
               ) a
-              GROUP BY nom_complet, zpr_cibles
+              GROUP BY zpr_cibles
             )
         SELECT st_asgeojson(st_transform(zpr_geom, 4326)), zpr_id, zpr_nom, zpr_categorie,
           zpr_date, zpr_duree, zpr_num_j, zpr_cmt, obr.obr_id, (obr.obr_nom || ' ' || obr.obr_prenom)
