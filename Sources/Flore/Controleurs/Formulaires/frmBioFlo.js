@@ -246,7 +246,7 @@ Ext.onReady(function() {
 //Affichage en mode ajout
 function ajoute(geom, attr) {
     initialiseFormulaire();
-    Ext.getCmp('bio_flo_inventaire_partiel').setValue('f');
+    Ext.getCmp('bio_flo_inventaire_partiel').setValue('t');
     // affectation du mode en ajout
     Ext.getCmp('action').setValue('Ajouter');
     // blocage des boutons de navigation
@@ -344,7 +344,7 @@ function initialiseFormulaire() {
 function afficherPrecedent() {
     if (grille.selModel.selectPrevious()) {
         grille.selModel.resumeEvents();
-        modifie();        
+        modifie();
     }
 }
 
