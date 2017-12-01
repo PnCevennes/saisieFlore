@@ -5,5 +5,5 @@ config.php
 
 Photos/*
 GPX/*
-ParamDefaut.js
-PostGreSQL.php
+Sources/Flore/Configuration/ParamDefaut.js
+Sources/Flore/Configuration/PostGreSQL.php
