@@ -4,14 +4,14 @@
     require_once '../../../../Outils/FiltreCarte.php';
     require_once '../../../../Outils/FiltreGrille.php';
     require_once '../../Modeles/Filtres/fGrille.php';
-    
+
     $cnxPgBd = new CnxPgBd();
     $req = "WITH cibles as (
-              SELECT string_agg(DISTINCT nom_complet, ' & ') AS cibles, zpr_cibles
-              FROM ( 
+              SELECT string_agg(DISTINCT nom_complet, ' & ') AS cibles, zpr_cibles  as zpr_cibles_id
+              FROM (
                 SELECT nom_complet, zpr_cibles
-                FROM inpn.v_cibles 
-                JOIN saisie.zone_prospection  
+                FROM inpn.v_cibles
+                JOIN saisie.zone_prospection
                 ON cd_nom = ANY(string_to_array(zpr_cibles, '&'))
 
               ) a
@@ -22,28 +22,23 @@
           AS observateur, numerisateur, (num.obr_nom || ' ' || num.obr_prenom)
           AS numerisat, coalesce(zpr_affectee, false) as zpr_affectee, cpt_enjeux,
           cpt_station, cpt_lichen, cpt_flore,
-          zp.zpr_cibles, cibles AS cibles 
+          zp.zpr_cibles, cibles AS cibles
         FROM saisie.zone_prospection zp
         LEFT JOIN saisie.observateur obr USING(obr_id)
         LEFT JOIN saisie.numerisateur num ON numerisateur = num.obr_id
-        LEFT JOIN saisie.v_zpr_affectees USING(zpr_id) 
-        LEFT JOIN saisie.v_zpr_bilan USING(zpr_id) 
-        LEFT JOIN cibles c ON c.zpr_cibles = zp.zpr_cibles
-        WHERE " . $where . ' AND ' . $and . $orderLimit;
+        LEFT JOIN saisie.v_zpr_affectees USING(zpr_id)
+        LEFT JOIN saisie.v_zpr_bilan USING(zpr_id)
+        LEFT JOIN cibles c ON c.zpr_cibles_id = zp.zpr_cibles
+        WHERE " . $where . ' AND ' . $and ;
 
-    $rs = $cnxPgBd->executeSql($req);
-    $rsTot = $cnxPgBd->executeSql('SELECT COUNT(zpr_id) FROM saisie.zone_prospection
-        LEFT JOIN saisie.observateur obr USING(obr_id)
-        LEFT JOIN saisie.numerisateur num ON numerisateur = num.obr_id
-        LEFT JOIN saisie.v_zpr_affectees USING(zpr_id) LEFT JOIN saisie.v_zpr_bilan
-        USING(zpr_id) WHERE ' . $where .
-        ' AND ' . $and);
-    $tot = pg_result($rsTot, 0, 0);
+    $rs = $cnxPgBd->executeSql($req. $orderLimit);
+    $rsTot = $cnxPgBd->executeSql('SELECT COUNT(zpr_id) FROM ('.$req.') a ');
+    $tot = pg_result($rsTot, 0, 0); 
     $geoJson = '{"type": "FeatureCollection", "features": [';
     // cas particulier des géométries "NULL"
     $geomNull = '{"type": "MultiPolygon", "coordinates": []}'; // obligatoire pour SelectFeature (OpenLayers) et LegendPanel (GeoExt)
     $premiereFois = true;
-    
+
     while ($tab = pg_fetch_assoc($rs)) {
         $geom = $tab['st_asgeojson'];
         // nécessaire pour le FeatureReader.js bidouillé avec le rajout de la ligne "this.totalRecords = values.st_asgeojson"
