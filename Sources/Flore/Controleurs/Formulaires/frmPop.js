@@ -171,7 +171,20 @@ Ext.onReady(function() {
                                     }
                                 }
                             },
-                            comboStatutValid
+                            comboStatutValid,
+                            {
+                                xtype: 'textarea',
+                                height: 50,
+                                fieldLabel: "Validation",
+                                id: 'pop_validation_commentaire',
+                                maxLength: 500
+                            }, {
+                                xtype: 'datefield',
+                                fieldLabel: 'Date validation',
+                                format: 'd/m/Y',
+                                id: 'pop_validation_date',
+                                blankText: "Veuillez entrer la date de validation !"
+                            }
                         ]
                     }
                 ]

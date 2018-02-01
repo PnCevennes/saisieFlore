@@ -241,7 +241,9 @@ function basculeEcran(sens) {
             {name: 'pop_rq_photo'},
             {name: 'cd_cb'},
             {name: 'lb_cb97_fr'},
-            {name: 'cd_cb_lb_cb97_fr'}
+            {name: 'cd_cb_lb_cb97_fr'},
+            {name: 'pop_validation_commentaire'},
+            {name: 'pop_validation_date'}
         ]
     });
     donneesGrille = new (Ext.extend(Ext.data.GroupingStore, new GeoExt.data.FeatureStoreMixin))({
@@ -318,7 +320,9 @@ function basculeEcran(sens) {
             {dataIndex: 'pop_rq_photo', header: 'Commentaires photo', hidden: true},
             {dataIndex: 'cd_cb', header: 'cd_cb', hidden: true},
             {dataIndex: 'lb_cb97_fr', header: 'lb_cb97_fr', hidden: true},
-            {dataIndex: 'cd_cb_lb_cb97_fr', header: 'CORINE biotope'}
+            {dataIndex: 'cd_cb_lb_cb97_fr', header: 'CORINE biotope'},
+            {dataIndex: 'pop_validation_commentaire', header: 'Validation cmt.', hidden: true},
+            {dataIndex: 'pop_validation_date', header: 'Validation date', hidden: true}
         ]
     });
     //Barre de menu

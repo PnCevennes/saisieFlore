@@ -228,7 +228,9 @@ function basculeEcran(sens) {
             {name: 'tax_bio_id'},
             {name: 'tax_rq_photo'},
             {name: 'nom_complet'},
-            {name: 'nom_vern'}
+            {name: 'nom_vern'},
+            {name: 'tax_validation_commentaire'},
+            {name: 'tax_validation_date'}
         ]
     });
     donneesGrille = new (Ext.extend(Ext.data.GroupingStore, new GeoExt.data.FeatureStoreMixin))({
@@ -329,7 +331,9 @@ function basculeEcran(sens) {
             {dataIndex: 'tax_url_photo', header: 'Photo', renderer: function(value) {
                 return renderIcon(CST_RepEspeces + value);}, hidden: true},
             {dataIndex: 'tax_rq_photo', header: 'Commentaires photo', hidden: true},
-            {dataIndex: 'tax_statut_validation', header: 'Statut valid.'}
+            {dataIndex: 'tax_statut_validation', header: 'Statut valid.'},
+            {dataIndex: 'tax_validation_commentaire', header: 'Validation cmt'},
+            {dataIndex: 'tax_validation_date', header: 'Validation date'}
         ]
     });
     //Barres de menu

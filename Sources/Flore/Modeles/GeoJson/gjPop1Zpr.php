@@ -8,7 +8,8 @@
     $req = 'SELECT st_asgeojson(st_transform(pop_geom, 4326)), pop_id, pop_surf,
         pop_descriptif, population.cd_nom, gtm_code, gtm_libelle, pop_nb, pop_pheno,
         pop_etiquette, nom_complet, nom_vern, pop_statut_validation, pop_rq, pop_url_photo,
-        pop_rq_photo, cd_cb, lb_cb97_fr, cd_cb_lb_cb97_fr FROM ONLY saisie.population
+        pop_rq_photo, cd_cb, lb_cb97_fr, cd_cb_lb_cb97_fr, pop_validation_commentaire, pop_validation_date
+        FROM ONLY saisie.population
         JOIN saisie.tl_ent_zpr_ptc ON ent_id = pop_id JOIN inpn.v_taxref_protocole_enjeux
         USING(cd_nom) LEFT JOIN inpn.v_corine_biotope USING(cd_cb) LEFT JOIN saisie.grand_type_milieu
         USING(gtm_code) WHERE ptc_id = ' . Pop::getValIdPtc() . ' AND zpr_id = ' .

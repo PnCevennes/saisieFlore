@@ -256,7 +256,9 @@ function basculeEcran(sens) {
             {name: 'tax_flo_bourgeon'},
             {name: 'tax_flo_floraison'},
             {name: 'tax_flo_fructification'},
-            {name: 'tax_flo_dissemination'}
+            {name: 'tax_flo_dissemination'},
+            {name: 'tax_validation_commentaire'},
+            {name: 'tax_validation_date'}
         ]
     });
     donneesGrille = new (Ext.extend(Ext.data.GroupingStore, new GeoExt.data.FeatureStoreMixin))({
@@ -366,7 +368,9 @@ function basculeEcran(sens) {
             {dataIndex: 'tax_flo_bourgeon', header: 'Bourgeon', renderer: traiteAffichageEntierPositifBooleen, hidden: true},
             {dataIndex: 'tax_flo_floraison', header: 'Floraison', renderer: traiteAffichageEntierPositifBooleen, hidden: true},
             {dataIndex: 'tax_flo_fructification', header: 'Fructificat.', renderer: traiteAffichageEntierPositifBooleen, hidden: true},
-            {dataIndex: 'tax_flo_dissemination', header: 'Disséminat.', renderer: traiteAffichageEntierPositifBooleen, hidden: true}
+            {dataIndex: 'tax_flo_dissemination', header: 'Disséminat.', renderer: traiteAffichageEntierPositifBooleen, hidden: true},
+            {dataIndex: 'tax_validation_commentaire', header: 'Validation cmt'},
+            {dataIndex: 'tax_validation_date', header: 'Validation date'}
         ]
     });
     //Barres de menu

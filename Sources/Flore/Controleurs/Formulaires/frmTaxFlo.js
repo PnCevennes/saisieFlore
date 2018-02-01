@@ -314,7 +314,21 @@ Ext.onReady(function() {
                                     }
                                 }
                             },
-                            comboStatutValid
+                            comboStatutValid,
+                            {
+                                xtype: 'textarea',
+                                height: 50,
+                                fieldLabel: "Validation",
+                                id: 'tax_validation_commentaire',
+                                maxLength: 500
+                            }, {
+                                xtype: 'datefield',
+                                fieldLabel: 'Date validation',
+                                format: 'd/m/Y',
+                                id: 'tax_validation_date',
+                                blankText: "Veuillez entrer la date de validation !"
+                            }
+
                         ]
                     }, {
                         labelWidth: 200,
