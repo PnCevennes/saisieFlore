@@ -243,7 +243,9 @@ function basculeEcran(sens) {
             {name: 'lb_cb97_fr'},
             {name: 'cd_cb_lb_cb97_fr'},
             {name: 'pop_validation_commentaire'},
-            {name: 'pop_validation_date'}
+            {name: 'pop_validation_date'},
+            {name: 'pop_validateur'}, 
+            {name: 'validateur_name'}
         ]
     });
     donneesGrille = new (Ext.extend(Ext.data.GroupingStore, new GeoExt.data.FeatureStoreMixin))({
@@ -322,7 +324,8 @@ function basculeEcran(sens) {
             {dataIndex: 'lb_cb97_fr', header: 'lb_cb97_fr', hidden: true},
             {dataIndex: 'cd_cb_lb_cb97_fr', header: 'CORINE biotope'},
             {dataIndex: 'pop_validation_commentaire', header: 'Validation cmt.', hidden: true},
-            {dataIndex: 'pop_validation_date', header: 'Validation date', hidden: true}
+            {dataIndex: 'pop_validation_date', header: 'Validation date', hidden: true},
+            {dataIndex: 'validateur_name', header: 'Validateur', hidden: true}
         ]
     });
     //Barre de menu

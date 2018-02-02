@@ -5,15 +5,19 @@
     require_once '../../Modeles/Classes/ClassPop.php';
 
     $cnxPgBd = new CnxPgBd();
-    $req = 'SELECT st_asgeojson(st_transform(pop_geom, 4326)), pop_id, pop_surf,
+    $req = "SELECT st_asgeojson(st_transform(pop_geom, 4326)), pop_id, pop_surf,
         pop_descriptif, population.cd_nom, gtm_code, gtm_libelle, pop_nb, pop_pheno,
         pop_etiquette, nom_complet, nom_vern, pop_statut_validation, pop_rq, pop_url_photo,
-        pop_rq_photo, cd_cb, lb_cb97_fr, cd_cb_lb_cb97_fr, pop_validation_commentaire, pop_validation_date
+        pop_rq_photo, cd_cb, lb_cb97_fr, cd_cb_lb_cb97_fr, 
+        pop_validation_commentaire, pop_validation_date, pop_validateur, obr_nom || ' ' || obr_prenom as validateur_name
         FROM ONLY saisie.population
-        JOIN saisie.tl_ent_zpr_ptc ON ent_id = pop_id JOIN inpn.v_taxref_protocole_enjeux
-        USING(cd_nom) LEFT JOIN inpn.v_corine_biotope USING(cd_cb) LEFT JOIN saisie.grand_type_milieu
-        USING(gtm_code) WHERE ptc_id = ' . Pop::getValIdPtc() . ' AND zpr_id = ' .
-        $_GET['zpr_id'] . $orderLimit;
+        JOIN saisie.tl_ent_zpr_ptc ON ent_id = pop_id 
+        JOIN inpn.v_taxref_protocole_enjeux USING(cd_nom) 
+        LEFT JOIN inpn.v_corine_biotope USING(cd_cb) 
+        LEFT JOIN saisie.grand_type_milieu USING(gtm_code) 
+        LEFT JOIN saisie.validateur ON pop_validateur = obr_id
+        WHERE ptc_id = " . Pop::getValIdPtc() . ' AND zpr_id = ' . $_GET['zpr_id'] . $orderLimit;
+
     $rs = $cnxPgBd->executeSql($req);
     $rsTot = $cnxPgBd->executeSql('SELECT COUNT(pop_id) FROM ONLY saisie.population 
         JOIN saisie.tl_ent_zpr_ptc ON ent_id = pop_id JOIN inpn.v_taxref_protocole_enjeux

@@ -1,6 +1,6 @@
 //Variables globales utilisées pour gérer le formulaire
 var formulaire, fenetreFormulaire, toucheENTREE = true, comboTypeMilieu, comboPheno,
-    comboStatutValid, comboEspecesEnjeux, comboCorineBiotope;
+    comboStatutValid, comboEspecesEnjeux, comboCorineBiotope,comboValidateur;
 
 Ext.onReady(function() {
     //Combo d'auto-complétion "Corine biotope"
@@ -82,6 +82,23 @@ Ext.onReady(function() {
         allowBlank: false,
         blankText: "Veuillez sélectionner l'espèce à enjeux observée !",
         forceSelection: true
+    });
+    //Combo d'auto-complétion "validateur"
+    comboValidateur = new Ext.form.ComboBox({
+        id: 'pop_validateur',
+        triggerAction: 'all',
+        store: new Ext.data.JsonStore({
+            url: "../Modeles/Json/jListVal.php?table=saisie.validateur&chId=obr_id&chVal=obr_nom || ' ' || obr_prenom",
+            fields: ['id', 'val']
+        }),
+        emptyText: 'Sélectionnez',
+        mode: 'local',
+        displayField: 'val',
+        valueField: 'id',
+        fieldLabel: 'Validateur',
+        allowBlank: true,
+        forceSelection : true,
+        hiddenName:'pop_validateur'
     });
     //Panel contenant le formulaire avec titre, contrôles de saisie et boutons action
     formulaire = new Ext.FormPanel({
@@ -182,9 +199,8 @@ Ext.onReady(function() {
                                 xtype: 'datefield',
                                 fieldLabel: 'Date validation',
                                 format: 'd/m/Y',
-                                id: 'pop_validation_date',
-                                blankText: "Veuillez entrer la date de validation !"
-                            }
+                                id: 'pop_validation_date'
+                            }, comboValidateur
                         ]
                     }
                 ]
@@ -260,6 +276,7 @@ Ext.onReady(function() {
     comboStatutValid.store.load();
     comboEspecesEnjeux.store.load();
     comboCorineBiotope.store.load();
+    comboValidateur.store.load();
 });
 
 //Affichage en mode ajout

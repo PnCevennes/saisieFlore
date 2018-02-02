@@ -1,6 +1,6 @@
 //Variables globales utilisées pour gérer le formulaire
 var formulaireLic, fenetreFormulaireLic, toucheENTREE_Lic = true, comboStatutValid,
-    comboEspecesLichens, comboExpo;
+    comboEspecesLichens, comboExpo, comboValidateur;
 
 Ext.onReady(function() {
     new Ext.KeyMap(document, {
@@ -56,6 +56,23 @@ Ext.onReady(function() {
         listWidth:500,
         blankText: "Veuillez sélectionner l'espèce lichens observée !",
         forceSelection: true
+    });
+    //Combo d'auto-complétion "validateur"
+    comboValidateur = new Ext.form.ComboBox({
+        id: 'tax_validateur',
+        triggerAction: 'all',
+        store: new Ext.data.JsonStore({
+            url: "../Modeles/Json/jListVal.php?table=saisie.validateur&chId=obr_id&chVal=obr_nom || ' ' || obr_prenom",
+            fields: ['id', 'val']
+        }),
+        emptyText: 'Sélectionnez',
+        mode: 'local',
+        displayField: 'val',
+        valueField: 'id',
+        fieldLabel: 'Validateur',
+        allowBlank: true,
+        forceSelection : true,
+        hiddenName:'tax_validateur'
     });
     //Panel contenant le formulaire avec titre, contrôles de saisie et boutons action
     formulaireLic = new Ext.FormPanel({
@@ -148,7 +165,8 @@ Ext.onReady(function() {
                                 id: 'tax_validation_date',
                                 allowBlank: true,
                                 blankText: "Veuillez entrer la date de validation !"
-                            }
+                            },
+                            comboValidateur
                         ]
                     }
                 ]
@@ -228,6 +246,7 @@ Ext.onReady(function() {
     comboStatutValid.store.load();
     comboExpo.store.load();
     comboEspecesLichens.store.load();
+    comboValidateur.store.load();
 });
 
 //Affichage en mode ajout

@@ -1,6 +1,6 @@
 //Variables globales utilisées pour gérer le formulaire
 var formulaireFlo, fenetreFormulaireFlo, toucheENTREE_Flo = true, comboStatutValid,
-    comboEspeces, tailleGenre = 0, modeRequete = '', comboPheno, comboGermination;
+    comboEspeces, tailleGenre = 0, modeRequete = '', comboPheno, comboGermination, comboValidateur;
 
 Ext.onReady(function() {
     new Ext.KeyMap(document, {
@@ -260,6 +260,23 @@ Ext.onReady(function() {
             }
         }
     });
+    //Combo d'auto-complétion "validateur"
+    comboValidateur = new Ext.form.ComboBox({
+        id: 'tax_validateur',
+        triggerAction: 'all',
+        store: new Ext.data.JsonStore({
+            url: "../Modeles/Json/jListVal.php?table=saisie.validateur&chId=obr_id&chVal=obr_nom || ' ' || obr_prenom",
+            fields: ['id', 'val']
+        }),
+        emptyText: 'Sélectionnez',
+        mode: 'local',
+        displayField: 'val',
+        valueField: 'id',
+        fieldLabel: 'Validateur',
+        allowBlank: true,
+        forceSelection : true,
+        hiddenName:'tax_validateur'
+    });
     //Panel contenant le formulaire avec titre, contrôles de saisie et boutons action
     formulaireFlo = new Ext.FormPanel({
         keys: [{key: [Ext.EventObject.ENTER], ctrl: false, fn: function() {if (toucheENTREE_Flo) {soumettreFlo()}}}],
@@ -327,8 +344,8 @@ Ext.onReady(function() {
                                 format: 'd/m/Y',
                                 id: 'tax_validation_date',
                                 blankText: "Veuillez entrer la date de validation !"
-                            }
-
+                            },
+                            comboValidateur
                         ]
                     }, {
                         labelWidth: 200,
@@ -482,6 +499,7 @@ Ext.onReady(function() {
     comboStatutValid.store.load();
     comboGermination.store.load();
     comboPheno.store.load();
+    comboValidateur.store.load();
 });
 
 //Affichage en mode ajout

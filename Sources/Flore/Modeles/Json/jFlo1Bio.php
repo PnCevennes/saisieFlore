@@ -8,13 +8,17 @@
     if (!isset($_POST['tax_bio_id'])) {
         $_POST['tax_bio_id'] = 0;
     }
-    $req = 'SELECT tax_flo_vegetatif, tax_flo_bourgeon, tax_flo_floraison, tax_flo_fructification,
-        tax_flo_dissemination, tax_flo_germination, tax_flo_nb_precis, tax_flo_nb,
-        tax_flo_pheno, tax_id, tax_rq, tax_statut_validation, cd_nom, tax_num_herbier,
-        tax_url_photo, tax_bio_id, tax_rq_photo, nom_complet, nom_vern,
-        tax_validation_commentaire, tax_validation_date
+    $req = "SELECT 
+            tax_flo_vegetatif, tax_flo_bourgeon, tax_flo_floraison, tax_flo_fructification,
+            tax_flo_dissemination, tax_flo_germination, tax_flo_nb_precis, tax_flo_nb,
+            tax_flo_pheno, tax_id, tax_rq, tax_statut_validation, cd_nom, tax_num_herbier,
+            tax_url_photo, tax_bio_id, tax_rq_photo, nom_complet, nom_vern,
+            tax_validation_commentaire, tax_validation_date,
+            tax_validateur, obr_nom || ' ' || obr_prenom as validateur_name
         FROM saisie.taxon_flore
-        JOIN inpn.taxref_inventaire_flore USING(cd_nom) WHERE tax_bio_id = ' . $_POST['tax_bio_id'] ;
+        JOIN inpn.taxref_inventaire_flore USING(cd_nom) 
+        LEFT OUTER JOIN saisie.validateur ON tax_validateur = obr_id
+        WHERE tax_bio_id = " . $_POST['tax_bio_id'] ;
         
     $rs = $cnxPgBd->executeSql($req. ' '.$orderLimit);
     
