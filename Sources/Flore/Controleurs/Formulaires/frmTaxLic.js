@@ -29,7 +29,6 @@ Ext.onReady(function() {
             url: '../Modeles/Json/jListEnum.php?typeEnum=saisie.enum_statut_validation',
             fields: ['val']
         }),
-        hidden: true,
         id: 'tax_statut_validation',
         emptyText: 'Sélectionnez',
         triggerAction: 'all',
@@ -138,7 +137,7 @@ Ext.onReady(function() {
                             }, {
                                 labelSeparator: '',
                                 xtype: 'textarea',
-                                height: 98,
+                                height: 76,
                                 fieldLabel: 'Remarques : <p style="font-size:9px">(diamètre max, ...)</p>',
                                 id: 'tax_rq',
                                 maxLength: 254,
@@ -327,11 +326,6 @@ function soumettreLic() {
 
 //Initialisation du formulaire
 function initialiseFormulaireLic() {
-    // gestion des droits particuliers pour l'observateur 303 "Chargé de missions" FLORE
-    if (numerisateur_droit >= 5) {
-        comboStatutValid.setVisible(true);
-        Ext.getCmp('tax_rq').height = 76;
-    }
     fenetreFormulaireLic.show();
     // mise à zéro des contrôles sur les onglets actifs
     formulaireLic.form.reset();

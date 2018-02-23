@@ -14,7 +14,7 @@
             tax_validation_commentaire, tax_validation_date,
             tax_validateur, obr_nom || ' ' || obr_prenom as validateur_name
         FROM saisie.taxon_lichen 
-        JOIN taxonomie.taxref ON taxref.cd_nom = taxon_flore.cd_nom::int
+        JOIN taxonomie.taxref ON taxref.cd_nom = taxon_lichen.cd_nom::int
         LEFT OUTER JOIN saisie.validateur ON tax_validateur = obr_id
         WHERE tax_bio_id = " . $_POST['tax_bio_id'];
     $rs = $cnxPgBd->executeSql($req);
