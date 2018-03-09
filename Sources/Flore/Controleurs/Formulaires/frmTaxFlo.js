@@ -199,7 +199,7 @@ Ext.onReady(function() {
             url: '../Modeles/Json/jListEnum.php?typeEnum=saisie.enum_statut_validation',
             fields: ['val']
         }),
-        hidden: true,
+        hidden: false,
         id: 'tax_statut_validation',
         emptyText: 'Sélectionnez',
         triggerAction: 'all',
@@ -618,10 +618,12 @@ function soumettreFlo() {
 
 //Initialisation du formulaire
 function initialiseFormulaireFlo() {
-    // gestion des droits particuliers pour l'observateur 303 "Chargé de missions" FLORE
-    if (numerisateur_droit >= 5) {
-        comboStatutValid.setVisible(true);
-        Ext.getCmp('tax_rq').height = 76;
+    // gestion des droits particuliers pour les observateurs validateur 
+    //  c-a-d niveau de droit >= 5 et qui font partit de la liste des validateurs
+    if ((numerisateur_droit >= 5) && (comboValidateur.store.data.keys.includes(numerisateur))) {
+        comboValidateur.setValue(numerisateur);
+        comboStatutValid.setValue('Valide');
+        Ext.getCmp('tax_validation_date').setValue(new Date())
     }
     fenetreFormulaireFlo.show();
     // mise à zéro des contrôles sur les onglets actifs

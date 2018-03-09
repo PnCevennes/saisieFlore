@@ -326,6 +326,13 @@ function soumettreLic() {
 
 //Initialisation du formulaire
 function initialiseFormulaireLic() {
+    // gestion des droits particuliers pour les observateurs validateur 
+    //  c-a-d niveau de droit >= 5 et qui font partit de la liste des validateurs
+    if ((numerisateur_droit >= 5) && (comboValidateur.store.data.keys.includes(numerisateur))) {
+        comboValidateur.setValue(numerisateur);
+        comboStatutValid.setValue('Valide');
+        Ext.getCmp('tax_validation_date').setValue(new Date())
+    }
     fenetreFormulaireLic.show();
     // mise à zéro des contrôles sur les onglets actifs
     formulaireLic.form.reset();
