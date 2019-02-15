@@ -607,11 +607,15 @@ function ajoute(geom) {
         Ext.getCmp('pop_surf').setValue(Math.round(geom.getGeodesicArea()));
     }
     if (numerisateur == 48) {
-        comboStatutValid.setValue('OK (Frantz Hopkins)');
+        
+        comboStatutValid.setValue('Valide');
+        comboValidateur.setValue(numerisateur);
     }
     else {
         if (numerisateur == 79) {
-            comboStatutValid.setValue('OK (Emeric Sulmont)');
+                
+            comboStatutValid.setValue('Valide');
+            comboValidateur.setValue(numerisateur);
         }
     }
     finaliseFormulaire();
