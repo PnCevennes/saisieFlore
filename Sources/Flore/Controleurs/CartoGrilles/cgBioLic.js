@@ -1,7 +1,7 @@
 //Variables globales utilisées pour gérer la cartogrille
 var donneesGrille, donneesGrilleLic, grille, grilleLic, fenetreCartoGrille, barrePaginat,
     barrePaginatLic, coucheEditable, sensRegion = CST_region, calqueBio, calqueZprObr,
-    numerisat, numerisateur, numerisateur_droit;
+    numerisat, numerisateur, numerisateur_droit, calqueGPX;
 
 Ext.onReady(function() {
     cstPtcId = CST_ptcIdLichens;
@@ -141,8 +141,23 @@ function basculeEcran(sens) {
             pointRadius: 6 // nécessaire pour afficher les géométries de type "POINT"
         })
     });
+    
+    //Calque du fichier GPX chargé
+    calqueGPX = new OpenLayers.Layer.Vector('Fichier GPX chargé', {
+        styleMap: new OpenLayers.StyleMap({
+            label: 'N°\n\n${name}',
+            fontColor: 'black',
+            fontSize: '14px',
+            fontWeight: 'bold',
+            labelAlign: 'cm',
+            fillColor: 'black',
+            strokeColor: 'black',
+            fillOpacity: 0.2,
+            pointRadius: 6 // nécessaire pour afficher les géométries de type "POINT"
+        })
+    });
     //Calques complémentaires pour la carte de base
-    carte.addLayers([coucheEditable, calqueBio, calqueZprObr]);
+    carte.addLayers([coucheEditable, calqueBio, calqueZprObr, calqueGPX]);
     //Outil d'historisation de la navigation
     var btnsHistoNavig = new OpenLayers.Control.NavigationHistory();
     carte.addControl(btnsHistoNavig);
@@ -359,9 +374,9 @@ function basculeEcran(sens) {
                 handler: exporterExcel,
                 iconCls: 'icon_excel'
             }, '-', {
-                text: 'Importer GPX',
-                tooltip: 'Importer un fichier GPX',
-                handler: importerGPX,
+                text: 'Afficher GPX',
+                tooltip: 'Afficher un fichier GPX',
+                handler: afficherGPX,
                 iconCls: 'import_GPX'
             }, '-',  {
                 text: 'Retourner ZP',
@@ -991,9 +1006,10 @@ function zoomerGeometrie() {
     }
 }
 
-//Appel du formulaire d'importation GPX
-function importerGPX() {
-    importeGPX();
+
+//Appel du formulaire de chargement GPX
+function afficherGPX() {
+    afficheGPX();
 }
 
 //Appel du formulaire d'affichage photo des supports
