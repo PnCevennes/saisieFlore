@@ -4,6 +4,8 @@
     require_once 'ClassCnxPgBd.php';
     require_once 'ClassPop.php';
     require_once 'ClassBioLic.php';
+    require_once 'ClassBioFlo.php';
+
 
     class Zpr extends Enreg {
         static private $tableZpr = 'saisie.zone_prospection';
@@ -28,11 +30,13 @@
         function supprime() {
             $listIdPop = $this->getListIdEnt1Zpr(Pop::getValIdPtc());
             $listIdBioLic = $this->getListIdEnt1Zpr(BioLic::getValIdPtc());
+            $listIdBioFlo = $this->getListIdEnt1Zpr(BioFlo::getValIdPtc());
             $req = 'DELETE FROM saisie.tl_ent_zpr_ptc WHERE ' . self::$chIdZpr .
                 ' = ' . $this->zpr_id;
             $this->cnxPg->executeSql($req);
             Pop::supprimeId($listIdPop);
             BioLic::supprimeId($listIdBioLic);
+            BioFlo::supprimeId($listIdBioFlo);
             return parent::supprime();
         }
 
