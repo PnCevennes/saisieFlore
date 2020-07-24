@@ -22,12 +22,12 @@
         }
 
         function executeSql($req) {
-            // connexion � la base PostGreSQL
+            // connexion � la base PostGreSQL
             $cnx = pg_connect($this->paramCnx());
             if (!$cnx) {
                 $errorMessage = 'ATTENTION : connexion impossible !!!';
                 $data = 'Paramètres incorrects : veuillez vérifier votre mot de passe !';// . $this->paramCnx();
-                unset($this);
+                //unset($this);
                 die('{success: false, errorMessage: "' . $errorMessage . '", data: "' .
                     $data .'"}');
             }

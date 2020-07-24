@@ -419,7 +419,13 @@ Ext.onReady(function() {
                                 id: 'tax_flo_nb'
                             },
                             comboPheno,
-                            comboGermination
+                            comboGermination,
+                            {
+                                xtype: 'spinnerfield',
+                                fieldLabel: 'Recouvrement (%)',
+                                minValue: 0,
+                                id: 'tax_flo_recouvrement_percent'
+                            },
                         ]
                     }
                 ]

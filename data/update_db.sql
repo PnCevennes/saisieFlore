@@ -10,10 +10,10 @@ ALTER TABLE saisie.population add pop_validateur int;
 
 
 
-UPDATE saisie.taxon SET tax_validateur = 48 WHERE tax_statut_validation 'OK (Frantz Hopkins)';
-UPDATE saisie.taxon SET tax_validateur = 79 WHERE tax_statut_validation 'OK (Emeric Sulmont)';
+UPDATE saisie.taxon SET tax_validateur = 48 WHERE tax_statut_validation = 'OK (Frantz Hopkins)';
+UPDATE saisie.taxon SET tax_validateur = 79 WHERE tax_statut_validation = 'OK (Emeric Sulmont)';
 
-UPDATE saisie.population SET pop_validateur = 48 WHERE pop_statut_validation 'OK (Frantz Hopkins)';
+UPDATE saisie.population SET pop_validateur = 48 WHERE pop_statut_validation = 'OK (Frantz Hopkins)';
 
 
 
@@ -37,9 +37,7 @@ UPDATE  saisie.population SET pop_statut_validation = 'En attente de validation'
 UPDATE  saisie.population SET pop_statut_validation = 'A compléter' WHERE pop_statut_validation = 'à compléter';
 UPDATE  saisie.population SET pop_statut_validation = 'Valide' WHERE pop_statut_validation::text ilike 'OK%';
 
-
-
-DELETE FROM pg_enum WHERE enumtypid = 689738 AND enumsortorder IN (1,2,3,4,5,6,7);
+DELETE FROM pg_enum WHERE enumtypid = (SELECT enumtypid FROM pg_enum WHERE enumlabel = 'OK (Emeric Sulmont)' ) AND enumsortorder IN (1,2,3,4,5,6,7);
 
 
 
@@ -57,3 +55,5 @@ GRANT ALL ON TABLE saisie.validateur TO obs_flore;
 
 GRANT SELECT ON TABLE utilisateurs.v_userslist_forall_menu TO GROUP gr_obs_flore;
 
+-- Ajout % de recouvrement
+ALTER TABLE saisie.taxon_flore ADD tax_flo_recouvrement_percent int;

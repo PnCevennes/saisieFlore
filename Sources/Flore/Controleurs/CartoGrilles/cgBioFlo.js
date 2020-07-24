@@ -260,6 +260,7 @@ function basculeEcran(sens) {
             {name: 'tax_validation_commentaire'},
             {name: 'tax_validation_date'},
             {name: 'tax_validateur'}, 
+            {name: 'tax_flo_recouvrement_percent'}, 
             {name: 'validateur_name'}
         ]
     });
@@ -373,6 +374,7 @@ function basculeEcran(sens) {
             {dataIndex: 'tax_flo_dissemination', header: 'Disséminat.', renderer: traiteAffichageEntierPositifBooleen, hidden: true},
             {dataIndex: 'tax_validation_commentaire', header: 'Validation cmt'},
             {dataIndex: 'tax_validation_date', header: 'Validation date'},
+            {dataIndex: 'tax_flo_recouvrement_percent', header: 'Recouverment (%)'},
             {dataIndex: 'validateur_name', header: 'Validateur', hidden: true}
         ]
     });
