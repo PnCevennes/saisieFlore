@@ -151,7 +151,7 @@ function basculeEcran(sens) {
         items: [{
                 text: 'Exporter grille',
                 tooltip: 'Exporter la grille au format Excel',
-                handler: exporterExcel,
+                handler: exporterCSV,
                 iconCls: 'icon_excel'
             }, '-', {
                 text: 'Importer sélection',
@@ -214,19 +214,22 @@ function basculeEcran(sens) {
     //Chargement des données à chaque fois car fichier GPX "uploadé"
     donneesGrille.load();
 }
-
-//Typage des données affichées pour l'export Excel
-function exporterExcel() {
-    var types = new Array();
-    types['ele'] = Ext.data.Types.INT;
-    types['date_obs_point'] = Ext.data.Types.DATE;
-    types['heure_obs_point'] = Ext.data.Types.TIME;
-    types['date_obs_ligne'] = Ext.data.Types.DATE;
-    types['heure_obs_ligne'] = Ext.data.Types.TIME;
-    types['date_obs_point_bis'] = Ext.data.Types.DATE;
-    types['heure_obs_point_bis'] = Ext.data.Types.TIME;
-    document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grille, types));
+function exporterCSV() {
+    genererCSVLink(grille);
 }
+
+// //Typage des données affichées pour l'export Excel
+// function exporterExcel() {
+//     var types = new Array();
+//     types['ele'] = Ext.data.Types.INT;
+//     types['date_obs_point'] = Ext.data.Types.DATE;
+//     types['heure_obs_point'] = Ext.data.Types.TIME;
+//     types['date_obs_ligne'] = Ext.data.Types.DATE;
+//     types['heure_obs_ligne'] = Ext.data.Types.TIME;
+//     types['date_obs_point_bis'] = Ext.data.Types.DATE;
+//     types['heure_obs_point_bis'] = Ext.data.Types.TIME;
+//     document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grille, types));
+// }
 
 //Zoom sur les éléments sélectionnés
 function zoomerSelection() {

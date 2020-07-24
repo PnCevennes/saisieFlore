@@ -370,8 +370,8 @@ function basculeEcran(sens) {
                 iconCls: 'delete'
             }, '-', {
                 text: 'Exporter grille',
-                tooltip: 'Exporter la grille au format Excel',
-                handler: exporterExcel,
+                tooltip: 'Exporter la grille au format CSV',
+                handler: exporterCSV,
                 iconCls: 'icon_excel'
             }, '-', {
                 text: 'Afficher GPX',
@@ -412,7 +412,7 @@ function basculeEcran(sens) {
             }, '-', {
                 text: 'Exporter grille',
                 tooltip: 'Exporter la grille au format Excel',
-                handler: exporterExcelLic,
+                handler: exporterCSVLic,
                 iconCls: 'icon_excel'
             }, '-', {
                 text: 'Voir photo',
@@ -948,21 +948,30 @@ function supprimeLic(btn) {
         }
     }
 }
-//Typages des données affichées pour les exports Excel
-function exporterExcel() {
-    var types = new Array();
-    types['bio_id'] = Ext.data.Types.INT;
-    document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grille, types));
+function exporterCSV() {
+    genererCSVLink(grille);
 }
-function exporterExcelLic() {
-    var types = new Array();
-    types['tax_id'] = Ext.data.Types.INT;
-    types['tax_lic_surf'] = Ext.data.Types.INT;
-    types['tax_lic_nb'] = Ext.data.Types.INT;
-    types['tax_lic_hauteur'] = Ext.data.Types.FLOAT;
-    types['tax_bio_id'] = Ext.data.Types.INT;
-    document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grilleLic, types));
+function exporterCSVLic() {
+    genererCSVLink(grilleLic);
 }
+
+
+// //Typages des données affichées pour les exports Excel
+// function exporterExcel() {
+//     var types = new Array();
+//     types['bio_id'] = Ext.data.Types.INT;
+//     document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grille, types));
+// }
+
+// function exporterExcelLic() {
+//     var types = new Array();
+//     types['tax_id'] = Ext.data.Types.INT;
+//     types['tax_lic_surf'] = Ext.data.Types.INT;
+//     types['tax_lic_nb'] = Ext.data.Types.INT;
+//     types['tax_lic_hauteur'] = Ext.data.Types.FLOAT;
+//     types['tax_bio_id'] = Ext.data.Types.INT;
+//     document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grilleLic, types));
+// }
 
 //Zoom sur les éléments sélectionnés
 function zoomerSelection() {

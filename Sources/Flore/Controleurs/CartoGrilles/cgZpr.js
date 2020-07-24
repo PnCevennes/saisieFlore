@@ -455,8 +455,8 @@ function basculeEcran(sens) {
                 iconCls: 'delete'
             }, '-', {
                 text: 'Exporter grille',
-                tooltip: 'Exporter la grille au format Excel',
-                handler: exporterExcel,
+                tooltip: 'Exporter la grille au format CSV',
+                handler: exporterCSV,
                 iconCls: 'icon_excel'
             },  '-', {
                 text: 'Afficher GPX',
@@ -758,15 +758,20 @@ function supprime(btn) {
     }
 }
 
-//Typage des données affichées pour l'export Excel
-function exporterExcel() {
-    var types = new Array();
-    types['zpr_id'] = Ext.data.Types.INT;
-    types['zpr_date'] = Ext.data.Types.DATE;
-    types['zpr_duree'] = Ext.data.Types.INT;
-    types['obr_id'] = Ext.data.Types.INT;
-    document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grille, types));
+function exporterCSV() {
+    genererCSVLink(grille)
 }
+
+// //Typage des données affichées pour l'export Excel
+// function exporterExcel() {
+//     var types = new Array();
+//     types['zpr_id'] = Ext.data.Types.INT;
+//     types['zpr_date'] = Ext.data.Types.DATE;
+//     types['zpr_duree'] = Ext.data.Types.INT;
+//     types['obr_id'] = Ext.data.Types.INT;
+
+//     document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grille, types));
+// }
 
 //Filtrage sur les éléments sélectionnés
 function filtrerSelection() {

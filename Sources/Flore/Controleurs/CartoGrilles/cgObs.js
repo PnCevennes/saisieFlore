@@ -115,8 +115,8 @@ function basculeEcran(sens) {
                 iconCls: 'switch'
             }, '-', {
                 text: 'Exporter grille',
-                tooltip: 'Exporter la grille au format Excel',
-                handler: exporterExcel,
+                tooltip: 'Exporter la grille au format CSV',
+                handler: exporterCSV,
                 iconCls: 'icon_excel'
             }, '-', {
                 text: 'Filtrer emprise',

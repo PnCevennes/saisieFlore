@@ -330,8 +330,8 @@ function basculeEcran(sens) {
                 iconCls: 'cog_edit'
             }, '-', {
                 text: 'Exporter grille',
-                tooltip: 'Exporter la grille au format Excel',
-                handler: exporterExcel,
+                tooltip: 'Exporter la grille au format CSV',
+                handler: exporterCSV,
                 iconCls: 'icon_excel'
             }, '-', {
                 text: 'Filtrer sélection',
@@ -575,13 +575,16 @@ function modifier() {
         Ext.MessageBox.alert('Attention', 'Vous devez sélectionner une station et une seule !').setIcon(Ext.MessageBox.WARNING);
     }
 }
-
-//Typage des données affichées pour l'export Excel
-function exporterExcel() {
-    var types = new Array();
-    types['bio_id'] = Ext.data.Types.INT;
-    document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grille, types));
+function exporterCSV() {
+    genererCSVLink(grille);
 }
+
+// //Typage des données affichées pour l'export Excel
+// function exporterExcel() {
+//     var types = new Array();
+//     types['bio_id'] = Ext.data.Types.INT;
+//     document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grille, types));
+// }
 
 //Filtrage sur les éléments sélectionnés
 function filtrerSelection() {

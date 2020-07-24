@@ -395,7 +395,7 @@ function basculeEcran(sens) {
             }, '-', {
                 text: 'Exporter grille',
                 tooltip: 'Exporter la grille au format Excel',
-                handler: exporterExcel,
+                handler: exporterCSV,
                 iconCls: 'icon_excel'
             }, '-', {
                 text: 'Importer GPX',
@@ -435,8 +435,8 @@ function basculeEcran(sens) {
                 iconCls: 'delete'
             }, '-', {
                 text: 'Exporter grille',
-                tooltip: 'Exporter la grille au format Excel',
-                handler: exporterExcelFlo,
+                tooltip: 'Exporter la grille au format CSV',
+                handler: exporterCSVFlo,
                 iconCls: 'icon_excel'
             }, '-', {
                 text: 'Voir photo',
@@ -981,26 +981,37 @@ function supprimeFlo(btn) {
         }
     }
 }
-//Typages des données affichées pour les exports Excel
-function exporterExcel() {
-    var types = new Array();
-    types['bio_id'] = Ext.data.Types.INT;
-    types['bio_flo_pente'] = Ext.data.Types.INT;
-    document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grille, types));
-}
-function exporterExcelFlo() {
-    var types = new Array();
-    types['tax_id'] = Ext.data.Types.INT;
-    types['tax_bio_id'] = Ext.data.Types.INT;
-    types['tax_flo_nb'] = Ext.data.Types.INT;
-    types['tax_flo_vegetatif'] = Ext.data.Types.INT;
-    types['tax_flo_bourgeon'] = Ext.data.Types.INT;
-    types['tax_flo_floraison'] = Ext.data.Types.INT;
-    types['tax_flo_fructification'] = Ext.data.Types.INT;
-    types['tax_flo_dissemination'] = Ext.data.Types.INT;
 
-    document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grilleFlo, types));
+function exporterCSV() {
+    genererCSVLink(grille);
 }
+
+
+function exporterCSVFlo() {
+    genererCSVLink(grilleFlo);
+}
+
+// //Typages des données affichées pour les exports Excel
+// function exporterExcel() {
+//     var types = new Array();
+//     types['bio_id'] = Ext.data.Types.INT;
+//     types['bio_flo_pente'] = Ext.data.Types.INT;
+//     document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grille, types));
+// }
+
+// function exporterExcelFlo() {
+//     var types = new Array();
+//     types['tax_id'] = Ext.data.Types.INT;
+//     types['tax_bio_id'] = Ext.data.Types.INT;
+//     types['tax_flo_nb'] = Ext.data.Types.INT;
+//     types['tax_flo_vegetatif'] = Ext.data.Types.INT;
+//     types['tax_flo_bourgeon'] = Ext.data.Types.INT;
+//     types['tax_flo_floraison'] = Ext.data.Types.INT;
+//     types['tax_flo_fructification'] = Ext.data.Types.INT;
+//     types['tax_flo_dissemination'] = Ext.data.Types.INT;
+
+//     document.location.href = 'data:application/vnd.ms-excel;base64,' + Base64.encode(getExcelXml(grilleFlo, types));
+// }
 
 //Zoom sur les éléments sélectionnés
 function zoomerSelection() {

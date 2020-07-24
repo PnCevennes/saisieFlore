@@ -66,7 +66,7 @@ oldPhrase = phrase;
 return out.join("");
 }
 
-//Fonction de récupération du champ "val" sous forme de tableau
+//Fonction de rï¿½cupï¿½ration du champ "val" sous forme de tableau
 function tableauValeurs(store) {
     var tabVal = [];
     var nb = store.getCount();
@@ -79,7 +79,7 @@ function tableauValeurs(store) {
     return tabVal;
 }
 
-//Actualisation de la liste d'éléments de la combo
+//Actualisation de la liste d'ï¿½lï¿½ments de la combo
 function actualiseCombo(cb, lb) {
     var nb = lb.store.getCount();
     if (nb > 0) {
@@ -96,7 +96,7 @@ function actualiseCombo(cb, lb) {
     }
 }
 
-//Suppression des éléments sélectionnés de la liste
+//Suppression des ï¿½lï¿½ments sï¿½lectionnï¿½s de la liste
 function supprimeSelection(cb, lb) {
     var listSuppr = lb.view.getSelectedIndexes();
     for (var i = listSuppr.length - 1; i >= 0; i--) {
@@ -105,7 +105,7 @@ function supprimeSelection(cb, lb) {
     actualiseCombo(cb, lb);
 }
 
-//Ajout dans la liste de l'élément sélectionné par la combo
+//Ajout dans la liste de l'ï¿½lï¿½ment sï¿½lectionnï¿½ par la combo
 function selectionne(cb, lb) {
     lb.store.add(
         new lb.store.recordType({
@@ -134,14 +134,14 @@ function remplitListe(codes, libelles, cb, lb) {
     actualiseCombo(cb, lb);
 }
 
-//Procédures de conversion des valeurs GPX
+//Procï¿½dures de conversion des valeurs GPX
 function transformeEnEntier(val) {
     if (val) {
-        // suppression des zéros non-significatifs
+        // suppression des zï¿½ros non-significatifs
         while ((val.length > 1) && (val.substr(0, 1) == '0')) {
             val = val.substr(1, 254);
         }
-        // conversion en nombre entier sans aucune évaluation
+        // conversion en nombre entier sans aucune ï¿½valuation
         if (!isNaN(val)) {
             var entier = Math.round(val);
             return entier;
@@ -150,14 +150,14 @@ function transformeEnEntier(val) {
     return null;
 }
 function transformeEnDateHeure(val) {
-    // conversion spécifique aux appareils GPS de dernière génération
+    // conversion spï¿½cifique aux appareils GPS de derniï¿½re gï¿½nï¿½ration
     var dateHeure = Date.parseDate(val, 'Y-m-d\\TH:i:s\\Z');
     if (dateHeure) {
         return dateHeure;
     }
     else {
-        // conversion spécifique aux appareils GPS de 1ère génération avec un traitement
-        // quasi-identique des tracés de dernière génération (au libellé du mois près)
+        // conversion spï¿½cifique aux appareils GPS de 1ï¿½re gï¿½nï¿½ration avec un traitement
+        // quasi-identique des tracï¿½s de derniï¿½re gï¿½nï¿½ration (au libellï¿½ du mois prï¿½s)
         var moisGPX = val.split('-')[1];
         var mois = 0;
         switch (moisGPX) {
@@ -501,10 +501,10 @@ Ext.override(Ext.state.CookieProvider, {
 
 //Initialisation des caches via le statemanager
 Ext.state.Manager.setProvider(new Ext.state.CookieProvider({
-       path: document.location.pathname, // réduction de la taille des cookies à la page web
+       path: document.location.pathname, // rï¿½duction de la taille des cookies ï¿½ la page web
        expires: new Date(new Date().getTime()+(1000*60*60*24*365)) // expiration dans 365 jours
    }
-)); // rechargement de la dernière configuration au niveau de l'affichage
+)); // rechargement de la derniï¿½re configuration au niveau de l'affichage
 
 //Initialisation des messages d'erreur et des info-bulles
 Ext.QuickTips.init();
@@ -573,7 +573,7 @@ function templateValidation(url, barreStatus, formulaire, fonctionRetour) {
             },
             success: function(form, action) {
                 barreStatus.setStatus({
-                    text: 'Opération réussie',
+                    text: 'Opï¿½ration rï¿½ussie',
                     iconCls: 'x-status-valid'
                 });
                 fonctionRetour(action.result.data);
@@ -589,6 +589,48 @@ function templateValidation(url, barreStatus, formulaire, fonctionRetour) {
         });
     }
     return dfd.promise();
+}
+
+function genererCSVLink(grille, filename="export.csv") {
+    var link = document.createElement("a");
+    link.download = filename;
+    link.href = "data:text/csv;charset=utf-8," + getCSV(grille);
+
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+    delete link;
+}
+
+//Exportation des grilles au format CSV
+function getCSV(grid) {
+    colDelimiter = ',';
+    textDelimiter = '"';
+
+    columns = grid.getColumnModel().columns.map(
+        col => col.dataIndex
+    ).filter(
+        c => c
+    );
+
+    csvContent = []
+    csvContent[0] = columns.join(colDelimiter); 
+    grid.store.data.items.forEach(
+        item => {
+        row = [];
+        columns.forEach (
+            c => {
+                row.push(textDelimiter + item.data[c] + textDelimiter);
+            
+            }
+        ) 
+        csvContent.push(row.join(colDelimiter));
+        }
+
+    );
+
+    return csvContent.join('\n');
 }
 
 //Exportation des grilles au format Excel
@@ -662,6 +704,8 @@ function getExcelXml(grid, types) {
         worksheet.xml +
         '</ss:Workbook>';
 }
+
+
 function createWorksheet(grid, types) {
     var cellType = [];
     var cellTypeClass = [];
