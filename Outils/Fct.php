@@ -6,6 +6,10 @@
         }
         else {
             switch ($typeCh) {
+                case 'saisie.enum_abondance_dominance':
+                    return "'" . pg_escape_string($val) . "'";
+                case 'enum_abondance_dominance':
+                    return "'" . pg_escape_string($val) . "'";
                 case 'saisie.enum_categorie_zp':
                     return "'" . pg_escape_string($val) . "'";
                 case 'enum_categorie_zp':

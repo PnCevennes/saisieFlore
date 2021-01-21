@@ -1,6 +1,6 @@
 //Variables globales utilisées pour gérer le formulaire
 var formulaireFlo, fenetreFormulaireFlo, toucheENTREE_Flo = true, comboStatutValid,
-    comboEspeces, tailleGenre = 0, modeRequete = '', comboPheno, comboGermination, comboValidateur;
+    comboEspeces, tailleGenre = 0, modeRequete = '', comboPheno, comboGermination, comboValidateur, comboAbondance;
 
 Ext.onReady(function() {
     new Ext.KeyMap(document, {
@@ -23,6 +23,21 @@ Ext.onReady(function() {
         valueField: 'val',
         fieldLabel: 'Germination'
     });
+    comboAbondance = new Ext.form.ComboBox({
+        store: new Ext.data.JsonStore({
+            url: '../Modeles/Json/jListEnum.php?typeEnum=saisie.enum_abondance_dominance',
+            fields: ['val']
+        }),
+        id: 'tax_flo_abondance_dominance',
+        emptyText: 'Sélectionnez',
+        triggerAction: 'all',
+        mode: 'local',
+        forceSelection: true,
+        displayField: 'val',
+        valueField: 'val',
+        fieldLabel: 'Abond./Domi.'
+    });
+
     var listPheno = new Ext.Panel({
         fieldLabel: 'Stades phénologiques',
         items: {
@@ -425,7 +440,7 @@ Ext.onReady(function() {
                                 fieldLabel: 'Recouvrement (%)',
                                 minValue: 0,
                                 id: 'tax_flo_recouvrement_percent'
-                            },
+                            }, comboAbondance
                         ]
                     }
                 ]
@@ -506,6 +521,7 @@ Ext.onReady(function() {
     comboGermination.store.load();
     comboPheno.store.load();
     comboValidateur.store.load();
+    comboAbondance.store.load();
 });
 
 //Affichage en mode ajout
@@ -564,6 +580,9 @@ function soumettreFlo() {
         // invalidation forcée des "emptyText" lors de la soumission
         if (comboGermination.getRawValue() == '') {
             comboGermination.setRawValue('');
+        }
+        if (comboAbondance.getRawValue() == '') {
+            comboAbondance.setRawValue('');
         }
         if (comboPheno.getRawValue() == '') {
             comboPheno.setRawValue('');

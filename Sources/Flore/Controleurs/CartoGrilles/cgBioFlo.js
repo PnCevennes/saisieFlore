@@ -261,6 +261,7 @@ function basculeEcran(sens) {
             {name: 'tax_validation_date'},
             {name: 'tax_validateur'}, 
             {name: 'tax_flo_recouvrement_percent'}, 
+            {name: 'tax_flo_abondance_dominance'}, 
             {name: 'validateur_name'}
         ]
     });
@@ -375,6 +376,7 @@ function basculeEcran(sens) {
             {dataIndex: 'tax_validation_commentaire', header: 'Validation cmt'},
             {dataIndex: 'tax_validation_date', header: 'Validation date'},
             {dataIndex: 'tax_flo_recouvrement_percent', header: 'Recouverment (%)'},
+            {dataIndex: 'tax_flo_abondance_dominance', header: 'Abond./Domi.'},
             {dataIndex: 'validateur_name', header: 'Validateur', hidden: true}
         ]
     });

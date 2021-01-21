@@ -13,7 +13,7 @@
             tax_flo_dissemination, tax_flo_germination, tax_flo_nb_precis, tax_flo_nb,
             tax_flo_pheno, tax_id, tax_rq, tax_statut_validation, taxon_flore.cd_nom, tax_num_herbier,
             tax_url_photo, tax_bio_id, tax_rq_photo, nom_complet, nom_vern,
-            tax_validation_commentaire, tax_validation_date, tax_flo_recouvrement_percent,
+            tax_validation_commentaire, tax_validation_date, tax_flo_recouvrement_percent, tax_flo_abondance_dominance,
             tax_validateur, obr_nom || ' ' || obr_prenom as validateur_name
         FROM saisie.taxon_flore
         JOIN taxonomie.taxref ON taxref.cd_nom = taxon_flore.cd_nom::int
