@@ -591,16 +591,28 @@ function templateValidation(url, barreStatus, formulaire, fonctionRetour) {
     return dfd.promise();
 }
 
-function genererCSVLink(grille, filename="export.csv") {
-    var link = document.createElement("a");
-    link.download = filename;
-    link.href = "data:text/csv;charset=utf-8," + getCSV(grille);
+function genererCSVLink(grille, filename="export.csv") { 
 
-    document.body.appendChild(link);
-    link.click();
-
-    document.body.removeChild(link);
-    delete link;
+    // Creating a Blob for having a csv file format
+    // and passing the data with type
+    const blob = new Blob([getCSV(grille)], { type: 'text/csv' });
+ 
+    // Creating an object for downloading url
+    const url = window.URL.createObjectURL(blob)
+ 
+    // Creating an anchor(a) tag of HTML
+    const a = document.createElement('a')
+ 
+    // Passing the blob downloading url
+    a.setAttribute('href', url)
+ 
+    // Setting the anchor tag attribute for downloading
+    // and passing the download file name
+    a.setAttribute('download', filename);
+ 
+    // Performing a download with click
+    a.click()
+    delete a;
 }
 
 //Exportation des grilles au format CSV
