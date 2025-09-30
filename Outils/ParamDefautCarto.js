@@ -1,17 +1,16 @@
-//Colonne de cases à cocher pour s�lectionner/d�selectionner tout
+//Colonne de cases à cocher pour sélectionner/déselectionner tout
 var colonneSelection = new Ext.grid.CheckboxSelectionModel();
 var colonneSelectionCarto = new (new Ext.extend(Ext.grid.CheckboxSelectionModel,
     new GeoExt.grid.FeatureSelectionModelMixin));
 
-//Configuration par d�faut des cartes
-/*
+//Configuration par défaut des cartes
+
 Proj4js.defs["EPSG:3857"] = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs"
 
-
-var ign_api_key =  "uzstzm52el3k2czl20hh6vvc";
+ 
 var WMTS_IGN_SCANS = new OpenLayers.Layer.WMTS({
   name: "IGN - Scans",
-  url: 'https://wxs.ign.fr/' + ign_api_key + '/geoportail/wmts',
+  url: '//data.geopf.fr/private/wmts?apikey=ign_scan_ws',
   layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS", 
   matrixSet: "PM",
   style: "normal",
@@ -21,28 +20,28 @@ var WMTS_IGN_SCANS = new OpenLayers.Layer.WMTS({
 
 var WMTS_IGN_ORTHO = new OpenLayers.Layer.WMTS({
   name: "IGN - Orthophotos",
-  url: 'https://wxs.ign.fr/' + ign_api_key + '/geoportail/wmts',
+  url: '//data.geopf.fr/wmts',
   layer: 'ORTHOIMAGERY.ORTHOPHOTOS',
   matrixSet: "PM",
   style: "normal",
   numZoomLevels: 19,
   projection : new OpenLayers.Projection("EPSG:3857")
 }); 
-*/
+var couches = [WMTS_IGN_SCANS, WMTS_IGN_ORTHO]; // ordre des couches : arriére-plan >>> premier-plan
+
+/*
 var SRV_CARTO = 'http://5.196.128.222/mapserver/wms/';
 
-//Configuration par d�faut des cartes
+//Configuration par défaut des cartes
 var WMS_IGN = new OpenLayers.Layer.WMS('Fonds IGN', SRV_CARTO+'ign/',
     {layers: ['Sc1000', 'Sc25', 'Sc100', 'Sc250']});
 
 var WMS_BD_Orthos = new OpenLayers.Layer.WMS('BD Ortho HR (2012)', SRV_CARTO+'ortho_hr_2012/',
     {layers: ['BD_Orthos']});
-
+var couches = [WMS_IGN, WMS_BD_Orthos]; // ordre des couches : arriére-plan >>> premier-plan
+*/
     
-//var couches = [WMTS_IGN_SCANS,WMTS_IGN_ORTHO , WMS_ORTHO_HR, WMS_PNX]; // ordre des couches : arri�re-plan >>> premier-plan
-var couches = [WMS_IGN, WMS_BD_Orthos]; // ordre des couches : arri�re-plan >>> premier-plan
-
-// param�trage visuel, echelle, emprise et syst�me de projection
+// paramétrage visuel, echelle, emprise et systéme de projection
 const CST_center = [411185.962,5504029.003]; 
 const CST_zoom = 12;
 const CST_seuilZoomSelection = 17;
@@ -57,7 +56,7 @@ var carte = new OpenLayers.Map('carte', {
     controls: [
         new OpenLayers.Control.Navigation({
             zoomBoxEnabled: false,
-            // recentrage automatique en m�me temps que le (d�)zoom
+            // recentrage automatique en méme temps que le (dé)zoom
             wheelChange: function(evt, deltaZ) {
                 carte.moveTo(carte.getLonLatFromPixel(evt.xy), carte.getZoom() + deltaZ);
             }
@@ -85,15 +84,15 @@ var btnZoom = new OpenLayers.Control.ZoomBox({
     title: 'Zoomer',
     displayClass: 'olControlZoomBox'
 });
-// outil de rectangle de d�zoom
+// outil de rectangle de dézoom
 var btnDezoom = new OpenLayers.Control.ZoomBox({
     out: true,
-    title: 'D�zoomer',
+    title: 'Dézoomer',
     displayClass: 'olControlUnzoom'
 });
-// outil de d�placement sur la carte
+// outil de déplacement sur la carte
 var btnMvt = new OpenLayers.Control.DragPan({
-    title: 'Se d�placer',
+    title: 'Se déplacer',
     displayClass: 'olControlNavigation'
 });
 // outils de mesures
@@ -187,7 +186,7 @@ function afficherMesures(lg, surf, idElt) {
         var txt = '';
         var lgTxt = '';
         var surfTxt = '';
-        // pr�paration des unit�s d'affichage des valeurs
+        // préparation des unités d'affichage des valeurs
         if (lg >= 1000) {
             lgTxt = (lg / 1000).toFixed(3) + ' Km';
         }
@@ -221,7 +220,7 @@ var btnSauvEmprise = new OpenLayers.Control.Button({
             new OpenLayers.Projection('EPSG:4326'));
         creeCookie('emprise',emprise, 365);
         Ext.MessageBox.show({
-            title: 'Emprise sauvegard�e',
+            title: 'Emprise sauvegardée',
             msg: emprise,
             buttons: Ext.MessageBox.OK,
             icon: Ext.MessageBox.INFO
@@ -229,9 +228,9 @@ var btnSauvEmprise = new OpenLayers.Control.Button({
     },
     displayClass: 'olControlSaveExtent'
 });
-//Outil de zoom sur l'emprise sauvegard�e
+//Outil de zoom sur l'emprise sauvegardée
 var btnZoomEmprise = new OpenLayers.Control.Button({
-    title: "Zoomer sur l'emprise sauvegard�e",
+    title: "Zoomer sur l'emprise sauvegardée",
     trigger: function() {
         carte.zoomToExtent(new OpenLayers.Bounds.fromString(recupereCookie('emprise')).transform(new OpenLayers.Projection('EPSG:4326'),
             carte.getProjectionObject()));
